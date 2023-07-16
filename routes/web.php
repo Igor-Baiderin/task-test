@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 });
 
 Route::get('/clear', function() {
@@ -23,5 +23,4 @@ Route::get('/clear', function() {
     Artisan::call('config:cache');
     Artisan::call('view:clear');
     Artisan::call('route:clear');
-    Artisan::call('backup:clean');
     return "Кэш очищен.";});

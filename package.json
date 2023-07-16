@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite --host 0.0.0.0",
         "build": "vite build"
     },
     "devDependencies": {
@@ -11,7 +11,15 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.4.0",
+        "@fortawesome/free-brands-svg-icons": "^6.4.0",
+        "@fortawesome/free-regular-svg-icons": "^6.4.0",
+        "@fortawesome/free-solid-svg-icons": "^6.4.0",
+        "@fortawesome/vue-fontawesome": "^3.0.3",
+        "@popperjs/core": "^2.11.8",
         "@vitejs/plugin-vue": "^4.2.3",
-        "vue": "^3.3.4"
+        "bootstrap": "^5.3.0",
+        "vue": "^3.3.4",
+        "vue-router": "^4.2.4"
     }
 }
