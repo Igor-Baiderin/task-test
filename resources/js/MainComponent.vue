@@ -25,11 +25,9 @@ export default {
     EditExpense,
     ViewExpense,
   },
-  mounted() {
-  },
   methods: {
-    cancelExpenses() {
-      this.getExpense()
+    cancelExpense() {
+      this.getExpenses()
       this.oneExpense = null
       // здесь тоже по ссылкам махнется поэтому грузим по новой из БД
       this.arrMessageError = null;
@@ -38,8 +36,9 @@ export default {
     deleteExpense(id) {
       this.delete(id)
     },
-    copyToEditExpenses(Expense) {
+    copyToEditExpense(Expense) {
       this.oneExpense = Expense;
+      console.log(this.oneExpense)
       this.$refs.editTab.click()
     },
     getExpenses() {
@@ -102,18 +101,8 @@ export default {
 <template>
   <div class="container">
     <h2>Тестовое задание</h2>
-<!--    <button type="button" class="btn btn-success me-2">Success</button>-->
-<!--    <button type="button" class="btn btn-info me-2">Info</button>-->
-<!--    <button type="button" class="btn btn-warning me-2">Warning</button>-->
-<!--    <FontAwesomeIcon :icon="['fas', 'coffee']" />-->
-<!--    <FontAwesomeIcon :icon="['fab', 'youtube']"/>-->
-<!--    <FontAwesomeIcon icon="user"/>-->
-<!--    <FontAwesomeIcon icon="phone"/>-->
-<!--    <FontAwesomeIcon icon="pen-to-square"/>-->
-<!--    <button type="button"><FontAwesomeIcon icon="trash" class="me-1" style="color: red"/></button>-->
-<!--    <FontAwesomeIcon icon="plus"/>-->
-<!--    <FontAwesomeIcon icon="fa-solid fa-coffee" size='5x' />-->
-
+    <!--    <FontAwesomeIcon :icon="['fas', 'coffee']" />-->
+    <!--    <FontAwesomeIcon :icon="['fab', 'youtube']"/>-->
     <div class="col-12 col-sm-12 col-md-12">
       <div class="row">
         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -146,11 +135,12 @@ export default {
             @addExpense='create'
             @cancelExpense='cancelExpense'
           />
-          <edit-expense v-show="oneExpense"
-                     :oneExpense="oneExpense"
-                     :arrMessageError='arrMessageError'
-                     @editetExpense='update'
-                     @cancelExpense='cancelExpense'
+          <edit-expense
+            v-show="oneExpense"
+            :oneExpense="oneExpense"
+            :arrMessageError='arrMessageError'
+            @editetExpense='update'
+            @cancelExpense='cancelExpense'
           />
         </div>
       </div>
