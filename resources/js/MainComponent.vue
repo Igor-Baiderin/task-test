@@ -120,7 +120,7 @@ export default {
           <li class="nav-item" role="presentation" v-show="oneExpense">
             <button class="nav-link" id="pills-edit-tab" ref="editTab" data-bs-toggle="pill"
                     data-bs-target="#pills-edit"
-                    type="button" role="tab" aria-controls="pills-add" aria-selected="false">Редактирование
+                    type="button" role="tab" aria-controls="pills-edit" aria-selected="false">Редактирование
             </button>
           </li>
         </ul>
