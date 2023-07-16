@@ -14,10 +14,12 @@ class ExpenseFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
         return [
-            //
+            'sum' => $this->faker->numberBetween(100,500),
+            'comment' => $this->faker->text(200),
         ];
     }
 }

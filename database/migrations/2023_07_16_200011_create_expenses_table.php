@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->date('date')->default(now());
+            $table->integer('sum');
+            $table->char('comment', 255)->nullable();
         });
     }
 
