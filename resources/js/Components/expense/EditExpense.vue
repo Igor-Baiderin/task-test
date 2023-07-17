@@ -48,19 +48,19 @@ export default {
             locale="ru"
             format="dd.MM.yyyy"
             auto-apply/>
-          <message-validation-error :messageError="arrMessageError" name="newRecord.name"/>
+          <message-validation-error :messageError="arrMessageError" name="data.name"/>
         </div>
 
         <div class="form-group mb-4" style="max-width: 150px;">
           <label for="sum">Сумма:</label>
           <input class="form-control" name="sum" id="sum" type="number" v-model="oneExpense.sum">
-          <message-validation-error :messageError="arrMessageError" name="newRecord.sum"/>
+          <message-validation-error :messageError="arrMessageError" name="data.sum"/>
         </div>
 
         <div class="form-group mb-4">
           <label for="comment">Комментарий:</label>
           <input class="form-control" name="comment" id="comment" type="text" v-model="oneExpense.comment">
-          <message-validation-error :messageError="arrMessageError" name="newRecord.comment"/>
+          <message-validation-error :messageError="arrMessageError" name="data.comment"/>
         </div>
 
         <div class="form-group mt-2">

@@ -43,19 +43,19 @@ export default {
         <div class="form-group col-xl-3 col-sm-3 mb-4">
           <label for="date">Дата:</label>
           <input class="form-control" name="date" type="date" id="date" v-model="expense.date" required>
-          <message-validation-error :messageError="arrMessageError" name="newRecord.name"/>
+          <message-validation-error :messageError="arrMessageError" name="data.name"/>
         </div>
 
         <div class="form-group col-xl-3 col-sm-3 mb-4">
           <label for="sum">Сумма:</label>
           <input class="form-control" name="sum" id="sum" type="number" v-model="expense.sum">
-          <message-validation-error :messageError="arrMessageError" name="newRecord.sum"/>
+          <message-validation-error :messageError="arrMessageError" name="data.sum"/>
         </div>
 
         <div class="form-group col-xl-6 col-sm-6 mb-4">
           <label for="comment">Комментарий:</label>
           <input class="form-control" name="comment" id="comment" type="text" v-model="expense.comment">
-          <message-validation-error :messageError="arrMessageError" name="newRecord.comment"/>
+          <message-validation-error :messageError="arrMessageError" name="data.comment"/>
         </div>
 
         <div class="form-group mt-2">
