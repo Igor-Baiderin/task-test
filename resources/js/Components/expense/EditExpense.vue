@@ -23,7 +23,6 @@ export default {
       this.$emit("cancelExpense")
     },
     getRusDate(base) {
-      console.log(moment(base).locale('ru').format('DD.MM.YYYY'))
       return moment(base).locale('ru').format('DD.MM.YYYY');
     },
 
