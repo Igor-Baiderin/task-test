@@ -49,7 +49,7 @@
 
   ➜  APP_URL: http://localhost:8000
 
-
+Получение конкретной позиции - api и запрос реализован, но в коде выводиться в консоль при редактировании для проверки ответа (получаем отредактированную запись). Практического применения нет.
 ## Задача №3 (SQL)
 
 Имеется база со следующими таблицами:
@@ -73,8 +73,37 @@ CREATE TABLE `phone_numbers` (
 Оптимизируйте таблицы и запрос при необходимости.
 
 ### Ответ:
+```
+SELECT t1.name, count(t2.user_id) as tel
+	FROM `users` as t1
+	LEFT JOIN phone_numbers as t2 ON t1.id = t2.user_id
+		WHERE t1.gender = 2 
+			AND 
+            NOW() BETWEEN DATE_ADD(t1.birth_date, INTERVAL 18 YEAR) AND DATE_ADD(t1.birth_date, INTERVAL 22 YEAR)
+	GROUP BY t1.name;
+```
+Переделанные запросы на создание
+TIMESTAMP — хранит дату и время начиная с 1970 года, поэтому не использовал:
+```
+CREATE TABLE `users` (
+    `id`         INT(11) NOT NULL AUTO_INCREMENT,
+    `name`       VARCHAR(50) DEFAULT NULL,
+    `gender`     INT(2) NOT NULL COMMENT '0 - не указан, 1 - мужчина, 2 - женщина.',
+    `birth_date` DATETIME NOT NULL CHECK (`birth_date` > '1900-01-01') COMMENT 'Дата в unixtime.',
+    PRIMARY KEY (`id`)
+);
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+CREATE TABLE `phone_numbers` (
+    `id`      INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` INT(11) NOT NULL,
+    `phone`   VARCHAR(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `phone` CHECK (`phone` REGEXP '[+]?[0-9]{1,3} ?\\(?[0-9]{3}\\)? ?[0-9]{2}[0-9 -]+[0-9]{2}'),
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+);
+```
+Вторичный ключ для скорости запроса и каскадного удаления, уменьшена необоснованная величина полей, ограничение на возраст для исключения ошибок, для примера регулярка на телефон 10 знаков.
+
 
 ## Задача №4 (Оптимизация)
 Проведите рефакторинг, исправьте баги и прокомментируйте код, приведённый ниже.
@@ -100,7 +129,34 @@ foreach ($data as $user_id=>$name) {
 ```
 Прокомментируйте, какие минусы вы заметили в исходной реализации.
 ### Ответ:
+1 вариант:
+- mysqli_query использовать WHERE id IN ($user_ids)
+- $data предварительно обьявить массивом.
+- Использовать разные одинарные кавычки при выводе ссылок. 
 
-Не забудьте указать затраченное на задачу время.
+2 вариант 
+- использовать один запрос mysqli_fetch_all
+- в foreach ($data as $value) ссылки генерить по ключам массива $value['id] и $value['name']
+Пример по 2 варианту:
+```
+function load_users_data($user_ids) {
+    $user_ids = explode(',', $user_ids);
+    $db = new mysqli(("localhost", "root", "123123", "database", '3306');
+    return $db->query("SELECT * FROM users WHERE id IN($user_ids)")
+        ->fetch_all(MYSQLI_ASSOC);
+}
+// Как правило, в $_GET['user_ids'] должна приходить строка
+// с номерами пользователей через запятую, например: 1,2,17,48
+$data = load_users_data($_GET['user_ids']);
+foreach ($data as $item) {
+    echo "<a href='/show_user.php?id='.$item['id']."'>$item['name']</a>";
+}
+```
+Не забудьте указать затраченное на задачу время:
+
+Время рывками около 2 часов разворот последнего Larvel, webpack отсутствует, с vite ушло время.
+Часа четыре на пристройку bootstrap, FontAwesomeIcon и подбор компонентов для реализации.
+И сегодня часа три на все остальное.
+
 Результат необходимо прислать в виде архива или ссылки на публичный репозиторий (github, gitlab) по адресу general@profsalon.org, в теме письма указать «Тестовое задание [Ваши ФИО]».
 Спасибо!

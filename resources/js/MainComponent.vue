@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import ViewExpense from "@/Components/expense/ViewExpense.vue";
 import AddExpense from "@/Components/expense/AddExpense.vue";
 import EditExpense from "@/Components/expense/EditExpense.vue";
-import {ref, reactive, onBeforeUpdate} from 'vue'
+import { useToast } from "vue-toastification";
 
 export default {
   name: 'MainComponent',
@@ -38,23 +38,27 @@ export default {
     },
     copyToEditExpense(Expense) {
       this.oneExpense = Expense;
-      console.log(this.oneExpense)
       this.$refs.editTab.click()
     },
     getExpenses() {
-      axios.get('/api/expense')
+      axios.get('/api/test/expense')
         .then((response) => (this.expenses = response.data.expenses))
     },
+    getExpense(id) {
+      axios.get('/api/test/expense/' + id)
+        .then((response) => (console.log(response.data.expense)))
+    },
     create(newRecord) {
-      axios.post('/api/expense',
+      axios.post('/api/test/expense',
         {
-          newRecord: newRecord,
+          data: newRecord,
           headers: {
             'Content-Type': 'multipart/form-data',
           }
         }
       ).then(response => (
         this.getExpenses(),
+          useToast().success(response.data.notification.title),
           this.$refs.viewTab.click(),
           this.arrMessageError = null
       )).catch((error) => (
@@ -62,26 +66,28 @@ export default {
       ));
     },
     update(editExpense) {
-      axios.patch('/api/expense/' + editExpense.id,
+      axios.patch('/api/test/expense/' + editExpense.id,
         {
-          editExpense: editExpense,
+          data: editExpense,
           headers: {
             'Content-Type': 'multipart/form-data',
             'method': 'patch'
           }
         }
       ).then(response => (
-        this.getExpenses(),
+          useToast().success(response.data.notification.title),
+          this.getExpenses(),
           this.$refs.viewTab.click(),
           this.oneExpense = null,
-          this.arrMessageError = null
+          this.arrMessageError = null,
+          this.getExpense(editExpense.id)
       ))
         .catch(error => (
           this.arrMessageError = error.response.data.errors
         ));
     },
     delete(Expense) {
-      axios.delete('/api/expense/' + Expense.id,
+      axios.delete('/api/test/expense/' + Expense.id,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -89,9 +95,9 @@ export default {
           }
         }
       ).then(function (response) {
-        console.log('SUCCESS!!');
+        useToast().success(response.data.notification.title);
       }).catch(function (error) {
-        console.log(error);
+        useToast().warning(error)
       });
     }
   }
