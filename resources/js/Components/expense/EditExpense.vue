@@ -25,7 +25,6 @@ export default {
     getRusDate(base) {
       return moment(base).locale('ru').format('DD.MM.YYYY');
     },
-
   }
 }
 </script>
@@ -39,7 +38,13 @@ export default {
         </div>
 
         <div class="form-group mb-4">
-          <VueDatePicker v-model="oneExpense.date" inline auto-apply/>
+          <VueDatePicker
+            v-model="oneExpense.date"
+            style="width: 200px;"
+            openMenu
+            format="dd.MM.yyyy"
+            :enable-time-picker="false"
+            auto-apply/>
           <message-validation-error :messageError="arrMessageError" name="newRecord.name"/>
         </div>
 
