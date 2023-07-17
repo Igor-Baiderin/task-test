@@ -5,7 +5,10 @@ import moment from "moment";
 
 export default {
   name: 'EditExpense',
-  components: {VueDatePicker, MessageValidationError},
+  components: {
+    VueDatePicker,
+    MessageValidationError
+  },
   props: [
     'arrMessageError',
     'oneExpense'
@@ -42,13 +45,13 @@ export default {
             v-model="oneExpense.date"
             style="width: 200px;"
             openMenu
+            locale="ru"
             format="dd.MM.yyyy"
-            :enable-time-picker="false"
             auto-apply/>
           <message-validation-error :messageError="arrMessageError" name="newRecord.name"/>
         </div>
 
-        <div class="form-group mb-4" style="max-width: 100px;">
+        <div class="form-group mb-4" style="max-width: 150px;">
           <label for="sum">Сумма:</label>
           <input class="form-control" name="sum" id="sum" type="number" v-model="oneExpense.sum">
           <message-validation-error :messageError="arrMessageError" name="newRecord.sum"/>
