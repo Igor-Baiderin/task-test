@@ -1,9 +1,11 @@
 <script>
 import MessageValidationError from "@/Components/general/MessageValidationError.vue";
+import VueDatePicker from '@vuepic/vue-datepicker';
 import moment from "moment";
+
 export default {
   name: 'EditExpense',
-  components: {MessageValidationError},
+  components: {VueDatePicker, MessageValidationError},
   props: [
     'arrMessageError',
     'oneExpense'
@@ -14,6 +16,7 @@ export default {
   ],
   methods: {
     handOverExpense() {
+      console.log(this.oneExpense)
       this.$emit("editetExpense", this.oneExpense)
     },
     cancelExpense() {
@@ -36,20 +39,18 @@ export default {
           <h4>Редактирование расхода:</h4>
         </div>
 
-        <div class="form-group col-xl-3 col-sm-3 mb-4">
-          <label for="date">Дата:</label>
-          <input class="form-control" name="date" type="date" id="date" v-model="oneExpense.date" required>
-          <input class="form-control" name="text" type="text" id="date" :value="this.getRusDate(oneExpense.date)" required>
+        <div class="form-group mb-4">
+          <VueDatePicker v-model="oneExpense.date" inline auto-apply/>
           <message-validation-error :messageError="arrMessageError" name="newRecord.name"/>
         </div>
 
-        <div class="form-group col-xl-3 col-sm-3 mb-4">
+        <div class="form-group mb-4" style="max-width: 100px;">
           <label for="sum">Сумма:</label>
           <input class="form-control" name="sum" id="sum" type="number" v-model="oneExpense.sum">
           <message-validation-error :messageError="arrMessageError" name="newRecord.sum"/>
         </div>
 
-        <div class="form-group col-xl-6 col-sm-6 mb-4">
+        <div class="form-group mb-4">
           <label for="comment">Комментарий:</label>
           <input class="form-control" name="comment" id="comment" type="text" v-model="oneExpense.comment">
           <message-validation-error :messageError="arrMessageError" name="newRecord.comment"/>
