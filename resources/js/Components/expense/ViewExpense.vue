@@ -124,10 +124,10 @@ export default {
             <p>{{ item.comment }}</p>
           </div>
           <div class="d-flex justify-content-end col-2">
-            <a class="ms-2" @click="editExpense(index)" title="Редактировать">
+            <a class="ms-2 buttom-hover" @click="editExpense(index)" title="Редактировать">
               <FontAwesomeIcon icon="pen-to-square"/>
             </a>
-            <a class="ms-2" @click="deleteExpense(item, index)" title="Удалить">
+            <a class="ms-2 buttom-hover" @click="deleteExpense(item, index)" title="Удалить">
               <FontAwesomeIcon icon="trash"/>
             </a>
           </div>
@@ -136,6 +136,7 @@ export default {
       <div class="mt-3">
         <template v-if="this.selectedPaginate > 0 && pagesCount > 1">
           <paginate
+            class="buttom-hover"
             v-model="page"
             :page-range="3"
             :margin-pages="2"
@@ -153,4 +154,7 @@ export default {
 </template>
 
 <style scoped>
+.buttom-hover {
+  cursor: pointer;
+}
 </style>

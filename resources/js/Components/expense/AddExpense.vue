@@ -59,8 +59,8 @@ export default {
         </div>
 
         <div class="form-group mt-2">
-          <a class="btn btn-primary flat mr-4" @click="addExpense">Создать</a>
-          <a class="btn btn-default flat" @click="cancelExpense">Отменить</a>
+          <a class="btn btn-primary flat mr-2" @click="addExpense">Создать</a>
+          <a class="btn btn-secondary flat ms-2" @click="cancelExpense">Отменить</a>
         </div>
       </div>
     </form>
